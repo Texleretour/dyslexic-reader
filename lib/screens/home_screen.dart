@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Dislexic reader')),
+      appBar: AppBar(title: Text('Dyslexic reader')),
       body: Padding(
         padding: EdgeInsets.all(16),
         child: Column(
