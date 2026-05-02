@@ -16,6 +16,7 @@ class HomeScreen extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.all(16),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ElevatedButton.icon(
               onPressed: () => context.read<HomeProvider>()
@@ -23,11 +24,21 @@ class HomeScreen extends StatelessWidget {
               icon: Icon(Icons.photo_library),
               label: Text('Pick an image'),
             ),
+            Divider(),
             Container(
               padding: EdgeInsets.all(16),
               child: Consumer<HomeProvider>(
                 builder: (context, homeProvider, child) {
-                  return Text(homeProvider.recognizedText);
+                  if (homeProvider.processing) {
+                    return Center(
+                      child: CircularProgressIndicator.adaptive(),
+                    );
+                  } else {
+                    return homeProvider.recognizedText.isEmpty
+                            ? Text('No text recognized.')
+                            : Text(homeProvider.recognizedText);
+                  }
+                  
                 },
               ),
             ),

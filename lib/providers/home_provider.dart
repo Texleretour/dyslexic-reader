@@ -38,7 +38,7 @@ class HomeProvider extends ChangeNotifier {
 
   Future<void> pickAndProcessFile(FilePickerService filePicker) async {
     setError('');
-    setProcessing(true);
+    setRecognizedText('');
 
     try {
       final File? pickedFile = await filePicker.pickFile();
@@ -48,6 +48,7 @@ class HomeProvider extends ChangeNotifier {
         return;
       }
       
+      setProcessing(true);
       setRecognizedText(
         await _textRecognizer.recognizeText(pickedFile)
       );
