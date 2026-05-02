@@ -1,5 +1,7 @@
+import 'package:dislexic/providers/home_provider.dart';
 import 'package:dislexic/screens/home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +17,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: .fromSeed(seedColor: Colors.green),
       ),
-      home: const HomeScreen()
+      home: ChangeNotifierProvider(
+        create: (context) => HomeProvider(),
+        child: HomeScreen(),
+      ),
     );
   }
 }
