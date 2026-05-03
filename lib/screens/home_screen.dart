@@ -19,27 +19,29 @@ class HomeScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ElevatedButton.icon(
-              onPressed: () => context.read<HomeProvider>()
-                .pickAndProcessFile(_galleryPicker),
+              onPressed: () => context.read<HomeProvider>().pickAndProcessFile(
+                _galleryPicker,
+              ),
               icon: Icon(Icons.photo_library),
               label: Text('Pick an image'),
             ),
             Divider(),
-            Container(
-              padding: EdgeInsets.all(16),
-              child: Consumer<HomeProvider>(
-                builder: (context, homeProvider, child) {
-                  if (homeProvider.processing) {
-                    return Center(
-                      child: CircularProgressIndicator.adaptive(),
-                    );
-                  } else {
-                    return homeProvider.recognizedText.isEmpty
-                            ? Text('No text recognized.')
-                            : Text(homeProvider.recognizedText);
-                  }
-                  
-                },
+            Expanded(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: Consumer<HomeProvider>(
+                  builder: (context, homeProvider, child) {
+                    if (homeProvider.processing) {
+                      return Center(
+                        child: CircularProgressIndicator.adaptive(),
+                      );
+                    } else {
+                      return homeProvider.recognizedText.isEmpty
+                          ? Text('No text recognized.')
+                          : Text(homeProvider.recognizedText);
+                    }
+                  },
+                ),
               ),
             ),
             Consumer<HomeProvider>(
