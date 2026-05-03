@@ -6,24 +6,38 @@ import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   final FilePickerService _galleryPicker = ImageFilePicker(ImageSource.gallery);
+  final FilePickerService _cameraPicker = ImageFilePicker(ImageSource.camera);
 
   HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Dyslexic reader')),
+      appBar: AppBar(title: const Text('Dyslexic reader')),
       body: Padding(
         padding: EdgeInsets.all(16),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            ElevatedButton.icon(
-              onPressed: () => context.read<HomeProvider>().pickAndProcessFile(
-                _galleryPicker,
-              ),
-              icon: Icon(Icons.photo_library),
-              label: Text('Pick an image'),
+            const Text('Select a file to read:'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton.icon(
+                  onPressed: () => context
+                      .read<HomeProvider>()
+                      .pickAndProcessFile(_galleryPicker),
+                  icon: Icon(Icons.photo_library),
+                  label: const Text('Gallery'),
+                ),
+                ElevatedButton.icon(
+                  onPressed: () => context
+                      .read<HomeProvider>()
+                      .pickAndProcessFile(_cameraPicker),
+                  icon: Icon(Icons.camera),
+                  label: const Text('Camera'),
+                ),
+              ],
             ),
             Divider(),
             Expanded(
@@ -37,7 +51,7 @@ class HomeScreen extends StatelessWidget {
                       );
                     } else {
                       return homeProvider.recognizedText.isEmpty
-                          ? Text('No text recognized.')
+                          ? const Text('No text recognized.')
                           : Text(homeProvider.recognizedText);
                     }
                   },
