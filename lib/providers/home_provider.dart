@@ -4,6 +4,7 @@ import 'package:dislexic/core/file_picker/file_picker_service.dart';
 import 'package:dislexic/core/ocr/ocr_service.dart';
 import 'package:dislexic/utils/exceptions.dart';
 import 'package:dislexic/utils/logger.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 class HomeProvider extends ChangeNotifier {
@@ -55,8 +56,11 @@ class HomeProvider extends ChangeNotifier {
       setProcessing(false);
     } on PermissionsNotGrantedException {
       setError('pas la perm!');
+    } on PlatformException {
+      return;
     } catch (e) {
       setError('Ouais non ca craint');
+      logger.e('[Home Provier] $e');
     }
   }
 }
